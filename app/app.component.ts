@@ -1,12 +1,40 @@
-import { Component } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
+
+@Component({
+  selector: 'album-list',
+  inputs: ['albumList'],
+  outputs: ['onAlbumSelect'],
+  template: `
+  <h3 *ngFor="#currentAlbum of albumList" (click)="albumClicked(currentAlbum)">
+    {{ currentAlbum.name }}
+    {{ currentAlbum.name }}, {{ currentAlbum.artist }}, \${{ currentAlbum.price }}, {{ currentAlbum.genre }}
+  </h3>
+
+  `
+})
+export class AlbumListComponent {
+  public albumList: Album[];
+  public onAlbumSelect: EventEmitter<Album>;
+  constructor(){
+    this.onAlbumSelect = new EventEmitter();
+  }
+  albumClicked(clickedAlbum: Album): void {
+    console.log('child', clickedAlbum);
+    this.onAlbumSelect.emit(clickedAlbum);
+  }
+}
+
 
 @Component({
   selector: 'my-app',
+  directives: [AlbumListComponent],
   template:`
   <div class="container">
     <h1>Our Music Store App!</h1>
-    <h3>Odjfksajfl </h3>
-    <h3 *ngFor="#album of albums">{{ album.name }}, {{ album.artist }}, \${{ album.price }}, {{ album.genre }}</h3>
+    <album-list
+      [albumList]="albums"
+      (onAlbumSelect)="albumWasSelected($event)">
+    </album-list>
   </div>
   `
 })
@@ -22,6 +50,9 @@ export class AppComponent {
       new Album("Masters Of Classical Music", "Beethoven", 10, "Classical", 5),
       new Album("Blue Note", "Miles Davis", 20, "Jazz", 6)
     ];
+  }
+  albumWasSelected(clickedAlbum: Album): void {
+    console.log('parent', clickedAlbum);
   }
 }
 
