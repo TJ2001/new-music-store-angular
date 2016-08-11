@@ -8,7 +8,14 @@ import {Album} from './album.model';
   <input placeholder="Album Title" #newName>
   <input placeholder="Album Artist" #newArtist>
   <input type="number" placeholder="Price" #newPrice>
-  <input placeholder="Album Genre" #newGenre>
+  <select #newGenre>
+    <option value="All">All</option>
+    <option value="Rap">Rap</option>
+    <option value="Rock">Rock</option>
+    <option value="Classical">Classical</option>
+    <option value="Folk">Folk</option>
+    <option value="Country">Country</option>
+  </select>
   <button (click)="addAlbum(newName, newArtist, newPrice, newGenre)" class="btn-success btn-lg add-button">Add</button>
   `
 })
