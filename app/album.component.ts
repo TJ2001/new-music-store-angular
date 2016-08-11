@@ -6,7 +6,7 @@ import { Album } from './album.model';
     selector: 'album-display',
     inputs: ['album'],
   template: `
-    <h3>{{ album.name }} </h3>
+    <h3>{{ album.name }}, {{ album.artist }}, {{ album.price }}, {{ album.genre }}</h3>
   `
 })
 export class AlbumComponent {
